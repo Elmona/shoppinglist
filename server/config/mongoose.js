@@ -3,12 +3,6 @@
 const mongoose = require('mongoose')
 require('dotenv').config()
 
-// const url = 'localhost:27017'
-
-// const username = process.env.DB_USER
-// const password = process.env.DB_PWD
-// const database = 'shoppinglist'
-
 /**
  * Connection to mongoose database.
  *
@@ -27,6 +21,6 @@ module.exports.run = () => {
         process.exit(0)
       })
     })
-    resolve(mongoose.connect(process.env.MONGODB_URI))
+    resolve(mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true }))
   })
 }
