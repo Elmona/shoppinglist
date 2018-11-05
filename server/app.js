@@ -6,15 +6,11 @@ const socket = require('./components/socket')
 const mongoose = require('./config/mongoose.js')
 const bodyParser = require('body-parser')
 const helmet = require('helmet')
-// const path = require('path')
-// const express = require('express')
 
 const port = 3001
 
-// dotenv for saved passwords.
 require('dotenv').config()
 
-// Connect mongoose
 mongoose.run().catch(err => {
   console.log(err)
   process.exit(1)
@@ -23,7 +19,6 @@ mongoose.run().catch(err => {
 // Use Helmet to hide i'm a express server.
 app.use(helmet())
 
-// Socket.io
 socket(io)
 
 app.use(bodyParser.json())
