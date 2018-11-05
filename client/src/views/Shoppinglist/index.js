@@ -9,7 +9,6 @@ import FloatingActionButton from 'material-ui/FloatingActionButton'
 import TextField from 'material-ui/TextField'
 import AppBar from 'material-ui/AppBar'
 import IconButton from 'material-ui/IconButton'
-// import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 
 import NavigationClose from 'material-ui/svg-icons/navigation/close'
 import Paper from 'material-ui/Paper'
@@ -27,7 +26,8 @@ class App extends Component {
       title: '',
       id: '',
       items: [],
-      input: ''
+      input: '',
+      connected: 'Disconnected'
     }
 
     if (process.env.NODE_ENV === 'development') {
@@ -41,9 +41,6 @@ class App extends Component {
         items: [...data.items]
       })
     })
-
-    // TODO: Need to work on this!
-    // this.socket.on('error', () => this.props.history.replace('/login'))
 
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleAddNewItem = this.handleAddNewItem.bind(this)
@@ -67,6 +64,19 @@ class App extends Component {
           items: [...x.data.list]
         })
       })
+
+    setInterval(() => {
+      if (this.socket.connected) {
+        this.setState({ connected: 'Connected' })
+      } else {
+        this.setState({ connected: 'Disconnected' })
+        if (process.env.NODE_ENV === 'development') {
+          this.socket = io('', { query: `token=${getToken()}` })
+        } else {
+          this.socket = io('', { path: '/api/socket.io', query: `token=${getToken()}` })
+        }
+      }
+    }, 1000)
   }
 
   sendDataToServer() {
@@ -142,7 +152,6 @@ class App extends Component {
             style={{ marginBottom: '10px' }}
             title={this.state.title}
             iconElementLeft={<IconButton><NavigationClose /></IconButton>}
-            /* iconElementRight={<IconButton><MoreVertIcon /></IconButton>} */
             onLeftIconButtonClick={() => {
               this.socket.disconnect()
               this.props.history.replace('/')
@@ -187,6 +196,7 @@ class App extends Component {
               }, () => this.sendDataToServer())
             }}
           />
+          <div>{this.state.connected}</div>
         </Paper>
       </Container>
     )
