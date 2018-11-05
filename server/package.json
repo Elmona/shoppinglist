@@ -1,0 +1,33 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "express server",
+  "main": "app.js",
+  "scripts": {
+    "test": "npx mocha",
+    "start": "npx nodemon app.js"
+  },
+  "keywords": [
+    "express",
+    "node"
+  ],
+  "author": "Emil Larsson",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^2.0.1",
+    "body-parser": "^1.18.2",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "helmet": "^3.12.0",
+    "jsonwebtoken": "^8.2.1",
+    "mongoose": "^5.0.16",
+    "path": "^0.12.7",
+    "socket.io": "^2.1.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.1.1",
+    "standard": "^11.0.1",
+    "supertest": "^3.0.0"
+  }
+}

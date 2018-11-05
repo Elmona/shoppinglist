@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 621px){
+  body {
+    background: url('/bg.jpg') no-repeat center center fixed;
+  }
+}
+@media (max-width: 620px){
+  body {
+    background: url('/bg.jpg');
+  }
+}

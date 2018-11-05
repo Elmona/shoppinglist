@@ -1,0 +1,47 @@
+version: "3.5"
+
+services:
+  node:
+    build: server
+    container_name: shoppinglist-server
+    depends_on:
+      - mongo
+    ports:
+      - 3001:3001
+    expose:
+      - 3001
+    environment:
+      - APP_NAME=Chat
+      - SERVER_ROOT=.
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./server:/usr/src/app
+      - /usr/src/app/node_modules
+  react:
+    build: client
+    container_name: shoppinglist-client
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./client:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3000:3000
+  mongo:
+    image: clutteredcode/mongo-alpine
+    environment:
+      - MONGO_USERNAME=${MONGO_USERNAME}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+    container_name: shoppinglist-db
+    expose:
+      - "27017"
+    volumes:
+      - db:/data/db
+  mongodata:
+    image: tianon/true
+    container_name: shoppinglist-mongodata
+    volumes:
+      - db:/data/db
+
+volumes:
+  db:
